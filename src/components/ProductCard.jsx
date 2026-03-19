@@ -1,6 +1,6 @@
 import { IterationCcw } from 'lucide-react';
 
-export const ProductCard = ({ product, onAgregar }) => {
+export const ProductCard = ({ product, onAgregar, onDetalle }) => {
   // 1. Usamos el punto medio para preparar el estilo del precio
   const precioFormateado = product.price.toLocaleString('es-ES', {
     style: 'currency',
@@ -30,6 +30,13 @@ export const ProductCard = ({ product, onAgregar }) => {
           <span className='text-xl font-black text-gray-900'>
             {precioFormateado}
           </span>
+          <button
+            className='bg-blue-600 text-white hover:bg-indigo-600 p-3 rounded-full shadow-lg mb-1 active:scale-90 transition-all cursor-pointer'
+            onClick={() => {
+              onDetalle(product);
+            }}>
+            Ver Info
+          </button>
           <button
             onClick={() => onAgregar(product)}
             className='bg-gray-900 hover:bg-indigo-600 text-white p-3 rounded-full shadow-lg active:scale-90 transition-all cursor-pointer'
