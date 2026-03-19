@@ -31,7 +31,7 @@ export const ProductCard = ({ product, onAgregar, onDetalle }) => {
             {precioFormateado}
           </span>
           <button
-            className='bg-blue-600 text-white hover:bg-indigo-600 p-3 rounded-full shadow-lg mb-1 active:scale-90 transition-all cursor-pointer'
+            className='bg-indigo-600 hover:bg-indigo-700 text-white hover:bg-indigo-600 p-3 rounded-full shadow-lg mb-1 active:scale-90 transition-all cursor-pointer'
             onClick={() => {
               onDetalle(product);
             }}>
