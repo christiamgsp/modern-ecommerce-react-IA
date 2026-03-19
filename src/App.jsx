@@ -102,14 +102,33 @@ function App() {
 
           {/* GRID DE PRODUCTOS */}
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-6'>
-            {searchedList.map((e) => (
-              <ProductCard
-                onDetalle={seleccionarProducto}
-                onAgregar={Sumador}
-                key={e.id}
-                product={e}
-              />
-            ))}
+            {searchedList.length > 0 ? (
+              // SI HAY RESULTADOS: Hacemos el map como siempre
+              searchedList.map((e) => (
+                <ProductCard
+                  onDetalle={seleccionarProducto}
+                  onAgregar={Sumador}
+                  key={e.id}
+                  product={e}
+                />
+              ))
+            ) : (
+              // SI NO HAY RESULTADOS: Mostramos este div centrado
+              <div className='col-span-full py-20 text-center bg-white rounded-3xl shadow-sm border border-dashed border-gray-200'>
+                <span className='text-5xl mb-4 block'>🔍</span>
+                <h3 className='text-xl font-bold text-gray-800'>
+                  No hemos encontrado "{busqueda}"
+                </h3>
+                <p className='text-gray-500 mt-2'>
+                  Prueba con otros términos o revisa la ortografía.
+                </p>
+                <button
+                  onClick={() => setBusqueda('')}
+                  className='mt-6 text-indigo-600 font-bold hover:underline cursor-pointer'>
+                  Limpiar búsqueda
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
