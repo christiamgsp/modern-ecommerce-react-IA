@@ -1,4 +1,6 @@
 import { IterationCcw } from 'lucide-react';
+import { Toaster, toast } from 'sonner';
+import { Link } from 'react-router';
 
 export const ProductCard = ({ product, onAgregar, onDetalle }) => {
   // 1. Usamos el punto medio para preparar el estilo del precio
@@ -38,7 +40,10 @@ export const ProductCard = ({ product, onAgregar, onDetalle }) => {
             Ver Info
           </button>
           <button
-            onClick={() => onAgregar(product)}
+            onClick={() => {
+              onAgregar(product);
+              toast.success('Producto añadido')`¡${seleccionado.name} añadido!`;
+            }}
             className='bg-gray-900 hover:bg-indigo-600 text-white p-3 rounded-full shadow-lg active:scale-90 transition-all cursor-pointer'
             title='Añadir al carrito'>
             🛒

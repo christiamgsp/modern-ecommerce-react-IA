@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocalStorage } from './useLocalStorage';
+import { Toaster, toast } from 'sonner';
 
 export const useCart = () => {
   const [carrito, setCarrito] = useLocalStorage('mis_juegos', []);
@@ -44,13 +45,15 @@ export const useCart = () => {
 
   const finalizarCompra = () => {
     if (carrito.length === 0) {
-      alert('El carrito esta Vacio');
+      toast.error('¡Carrito Vacio!', {
+        description: 'Selecciona algun producto de tu eleccion para continuar.',
+      });
 
       return;
     } else {
-      alert(
-        `Compra de ${total.toFixed(2)} hecha con Exito pronto recibiras tus productos  `
-      );
+      toast.info('¡Gracias por tu compra!', {
+        description: 'Tu pedido llegará pronto.',
+      });
 
       setCarrito([]);
     }

@@ -2,6 +2,10 @@ import { ProductCard } from './components/ProductCard';
 import { useEffect, useState } from 'react';
 import { useCart } from './hooks/useCart';
 import { Navbar } from './components/Navbar';
+import { Toaster, toast } from 'sonner';
+import { SkeletonCard } from './components/SkeletonCard';
+import { Routes, Route } from 'react-router-dom';
+import { CarritoPage } from './pages/CarritoPage';
 
 // 1. EL TRADUCTOR (Corregido para usar el título de la API)
 const formaterProducto = (apiItem) => ({
@@ -46,11 +50,12 @@ function App() {
 
   return (
     <div className='flex flex-col min-h-screen bg-gray-50 text-gray-900'>
-      <Navbar busqueda={busqueda} onSearch={textSearcher} />
+      <Toaster richColors position='top-center' />
+      <Navbar busqueda={busqueda} onSearch={textSearcher} carrito={carrito} />
 
       <main className='flex flex-1 w-full relative'>
         {/* COLUMNA IZQUIERDA: PRODUCTOS Y MODAL */}
-        <div className='flex-1 p-6 lg:pr-[340px]'>
+        <div className='flex-1 p-6'>
           {/* MODAL DE INFORMACIÓN */}
           {seleccionado && (
             <div className='fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all'>
@@ -90,6 +95,7 @@ function App() {
                       onClick={() => {
                         Sumador(seleccionado);
                         setSeleccionado(null);
+                        toast.success(`¡${seleccionado.name} añadido!`);
                       }}
                       className='bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold shadow-lg transition-all active:scale-95 cursor-pointer'>
                       Añadir al carrito
@@ -100,100 +106,54 @@ function App() {
             </div>
           )}
 
-          {/* GRID DE PRODUCTOS */}
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-6'>
-            {searchedList.length > 0 ? (
-              // SI HAY RESULTADOS: Hacemos el map como siempre
-              searchedList.map((e) => (
-                <ProductCard
-                  onDetalle={seleccionarProducto}
-                  onAgregar={Sumador}
-                  key={e.id}
-                  product={e}
-                />
-              ))
-            ) : (
-              // SI NO HAY RESULTADOS: Mostramos este div centrado
-              <div className='col-span-full py-20 text-center bg-white rounded-3xl shadow-sm border border-dashed border-gray-200'>
-                <span className='text-5xl mb-4 block'>🔍</span>
-                <h3 className='text-xl font-bold text-gray-800'>
-                  No hemos encontrado "{busqueda}"
-                </h3>
-                <p className='text-gray-500 mt-2'>
-                  Prueba con otros términos o revisa la ortografía.
-                </p>
-                <button
-                  onClick={() => setBusqueda('')}
-                  className='mt-6 text-indigo-600 font-bold hover:underline cursor-pointer'>
-                  Limpiar búsqueda
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* COLUMNA DERECHA: CARRITO */}
-        <aside className='hidden lg:flex fixed right-0 top-[88px] w-80 bg-white h-[calc(100vh-88px)] shadow-2xl border-l border-gray-100 flex-col'>
-          <div className='p-6 flex-1 flex flex-col overflow-hidden'>
-            <div className='flex items-center justify-between mb-6'>
-              <h2 className='text-xl font-bold text-gray-800 italic'>
-                Tu Selección
-              </h2>
-              <span className='bg-indigo-600 text-white text-xs font-black px-3 py-1 rounded-full'>
-                {carrito.length}
-              </span>
-            </div>
-
-            <div className='flex-1 overflow-y-auto space-y-3 pr-2'>
-              {carrito.length === 0 ? (
-                <div className='text-center py-20 opacity-30 text-sm'>
-                  Tu carrito está vacío
-                </div>
-              ) : (
-                carrito.map((e) => (
-                  <div
-                    key={e.id}
-                    className='flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100'>
-                    <div className='flex flex-col max-w-[150px]'>
-                      <span className='text-xs font-bold truncate text-gray-700'>
-                        {e.name}
-                      </span>
-                      <span className='text-[10px] text-gray-400 font-semibold'>
-                        Cant: {e.cantidad}
-                      </span>
-                    </div>
-                    <div className='flex flex-col items-end'>
-                      <span className='text-xs font-black text-indigo-600'>
-                        {e.price}€
-                      </span>
+          <Routes>
+            {/* 1. Ruta de la tienda (HOME) */}
+            <Route
+              path='/'
+              element={
+                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-6'>
+                  {productosApi.length === 0 ? (
+                    [...Array(8)].map((_, i) => <SkeletonCard key={i} />)
+                  ) : searchedList.length > 0 ? (
+                    searchedList.map((e) => (
+                      <ProductCard
+                        onDetalle={seleccionarProducto}
+                        onAgregar={Sumador}
+                        key={e.id}
+                        product={e}
+                      />
+                    ))
+                  ) : (
+                    <div className='col-span-full py-20 text-center bg-white rounded-3xl shadow-sm border border-dashed border-gray-200'>
+                      {/* ... Contenido de búsqueda vacía ... */}
+                      <h3 className='text-xl font-bold text-gray-800'>
+                        No hemos encontrado "{busqueda}"
+                      </h3>
                       <button
-                        onClick={() => restador(e.id)}
-                        className='text-[10px] text-red-400 font-bold hover:text-red-600 transition-colors cursor-pointer'>
-                        Eliminar
+                        onClick={() => setBusqueda('')}
+                        className='mt-6 text-indigo-600 font-bold hover:underline cursor-pointer'>
+                        Limpiar búsqueda
                       </button>
                     </div>
-                  </div>
-                ))
-              )}
-            </div>
+                  )}
+                </div>
+              }
+            />
 
-            <div className='mt-6 pt-6 border-t border-gray-100'>
-              <div className='flex justify-between items-center mb-4'>
-                <span className='text-gray-400 font-bold text-sm uppercase'>
-                  Total
-                </span>
-                <span className='text-2xl font-black text-gray-900'>
-                  {total.toFixed(2)} €
-                </span>
-              </div>
-              <button
-                className='w-full bg-gray-900 hover:bg-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-95 cursor-pointer'
-                onClick={finalizarCompra}>
-                FINALIZAR COMPRA
-              </button>
-            </div>
-          </div>
-        </aside>
+            {/* 2. Ruta del Carrito (Sustituye al grid cuando la URL es /carrito) */}
+            <Route path='/carrito' element={<CarritoPage />} />
+
+            {/* 3. Ruta de Detalle */}
+            <Route
+              path='/producto/:id'
+              element={
+                <h1 className='p-20 text-4xl text-center'>
+                  Página de detalle en construcción 🛠️
+                </h1>
+              }
+            />
+          </Routes>
+        </div>
       </main>
     </div>
   );
