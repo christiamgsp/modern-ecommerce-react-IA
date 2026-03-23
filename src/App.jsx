@@ -1,13 +1,13 @@
 import { ProductCard } from './components/ProductCard';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useCart } from './hooks/useCart';
 import { Navbar } from './components/Navbar';
 import { Toaster, toast } from 'sonner';
 import { SkeletonCard } from './components/SkeletonCard';
 import { Routes, Route } from 'react-router-dom';
 import { CarritoPage } from './pages/CarritoPage';
+import { CartContext } from './context/CartContext';
 
-// 1. EL TRADUCTOR (Corregido para usar el título de la API)
 const formaterProducto = (apiItem) => ({
   id: apiItem.id,
   name: apiItem.title,
@@ -18,13 +18,13 @@ const formaterProducto = (apiItem) => ({
 });
 
 function App() {
-  const { carrito, Sumador, total, finalizarCompra, restador } = useCart();
   const [busqueda, setBusqueda] = useState('');
   const [productosApi, setProductosApi] = useState([]);
   const [seleccionado, setSeleccionado] = useState(null);
+  const { carrito, Sumador } = useContext(CartContext);
 
   useEffect(() => {
-    fetch('https://dummyjson.com/products?limit=100')
+    fetch('https://dummyjson.com/products?limit=300')
       .then((res) => res.json())
       .then((data) => {
         const productosFiltrados = data.products.filter(
@@ -51,16 +51,13 @@ function App() {
   return (
     <div className='flex flex-col min-h-screen bg-gray-50 text-gray-900'>
       <Toaster richColors position='top-center' />
-      <Navbar busqueda={busqueda} onSearch={textSearcher} carrito={carrito} />
+      <Navbar busqueda={busqueda} onSearch={textSearcher} />
 
       <main className='flex flex-1 w-full relative'>
-        {/* COLUMNA IZQUIERDA: PRODUCTOS Y MODAL */}
         <div className='flex-1 p-6'>
-          {/* MODAL DE INFORMACIÓN */}
           {seleccionado && (
             <div className='fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all'>
               <div className='bg-white w-full max-w-lg p-10 rounded-3xl shadow-2xl relative animate-in fade-in zoom-in duration-300'>
-                {/* Botón X superior */}
                 <button
                   className='absolute top-5 right-6 text-gray-400 hover:text-indigo-600 text-2xl font-bold cursor-pointer transition-colors'
                   onClick={() => setSeleccionado(null)}>
@@ -90,7 +87,6 @@ function App() {
                       Cerrar
                     </button>
 
-                    {/* BOTÓN AÑADIR */}
                     <button
                       onClick={() => {
                         Sumador(seleccionado);
@@ -107,7 +103,6 @@ function App() {
           )}
 
           <Routes>
-            {/* 1. Ruta de la tienda (HOME) */}
             <Route
               path='/'
               element={
@@ -125,7 +120,6 @@ function App() {
                     ))
                   ) : (
                     <div className='col-span-full py-20 text-center bg-white rounded-3xl shadow-sm border border-dashed border-gray-200'>
-                      {/* ... Contenido de búsqueda vacía ... */}
                       <h3 className='text-xl font-bold text-gray-800'>
                         No hemos encontrado "{busqueda}"
                       </h3>
@@ -140,10 +134,8 @@ function App() {
               }
             />
 
-            {/* 2. Ruta del Carrito (Sustituye al grid cuando la URL es /carrito) */}
             <Route path='/carrito' element={<CarritoPage />} />
 
-            {/* 3. Ruta de Detalle */}
             <Route
               path='/producto/:id'
               element={

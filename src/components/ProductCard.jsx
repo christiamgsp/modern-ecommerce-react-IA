@@ -3,7 +3,6 @@ import { Toaster, toast } from 'sonner';
 import { Link } from 'react-router';
 
 export const ProductCard = ({ product, onAgregar, onDetalle }) => {
-  // 1. Usamos el punto medio para preparar el estilo del precio
   const precioFormateado = product.price.toLocaleString('es-ES', {
     style: 'currency',
     currency: 'EUR',
@@ -11,7 +10,6 @@ export const ProductCard = ({ product, onAgregar, onDetalle }) => {
 
   return (
     <div className='bg-white text-gray-900 rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col border border-gray-100'>
-      {/* Contenedor de Imagen con aspecto de producto */}
       <div className='h-52 w-full bg-gray-50 flex items-center justify-center p-4'>
         <img
           src={product.image}
@@ -42,7 +40,7 @@ export const ProductCard = ({ product, onAgregar, onDetalle }) => {
           <button
             onClick={() => {
               onAgregar(product);
-              toast.success('Producto añadido')`¡${seleccionado.name} añadido!`;
+              toast.success(`${product.name} Añadido`);
             }}
             className='bg-gray-900 hover:bg-indigo-600 text-white p-3 rounded-full shadow-lg active:scale-90 transition-all cursor-pointer'
             title='Añadir al carrito'>

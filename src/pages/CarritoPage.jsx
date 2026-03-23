@@ -1,9 +1,10 @@
-import { useCart } from '../hooks/useCart';
+import { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 
 export const CarritoPage = () => {
-  const { carrito, total, finalizarCompra, restador } = useCart();
+  const { carrito, total, finalizarCompra, restador } = useContext(CartContext);
 
   return (
     <div className='p-10 max-w-4xl mx-auto w-full'>
