@@ -4,7 +4,9 @@ import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 
 export const CarritoPage = () => {
-  const { carrito, total, finalizarCompra, restador } = useContext(CartContext);
+  // Asegúrate de traer Sumador del contexto
+  const { carrito, total, finalizarCompra, restador, RestadorUno, Sumador } =
+    useContext(CartContext);
 
   return (
     <div className='p-10 max-w-4xl mx-auto w-full'>
@@ -31,16 +33,45 @@ export const CarritoPage = () => {
               <div
                 key={e.id}
                 className='flex justify-between items-center border-b pb-4 last:border-0'>
+                {/* PARTE IZQUIERDA: Nombre */}
                 <div className='flex flex-col'>
-                  <span className='font-bold text-lg'>{e.name}</span>
-                  <span className='text-gray-500'>Cantidad: {e.cantidad}</span>
+                  <span className='font-bold text-lg text-gray-800'>
+                    {e.name}
+                  </span>
                 </div>
+
+                {/* PARTE DERECHA: Botones, Precio y Eliminar */}
                 <div className='flex items-center gap-6'>
-                  <span className='font-black text-indigo-600'>{e.price}€</span>
+                  {/* BOTONERA: Justo a la izquierda del precio */}
+                  <div className='flex items-center bg-gray-100 rounded-xl p-1 shadow-inner border border-gray-200'>
+                    <button
+                      className='w-8 h-8 flex items-center justify-center bg-white rounded-lg shadow-sm hover:bg-red-50 hover:text-red-600 transition-all active:scale-90 font-bold cursor-pointer'
+                      onClick={() => RestadorUno(e.id)}>
+                      -
+                    </button>
+
+                    <span className='px-3 font-black text-gray-700 w-8 text-center'>
+                      {e.cantidad}
+                    </span>
+
+                    <button
+                      className='w-8 h-8 flex items-center justify-center bg-white rounded-lg shadow-sm hover:bg-indigo-50 hover:text-indigo-600 transition-all active:scale-90 font-bold cursor-pointer'
+                      onClick={() => Sumador(e)}>
+                      +
+                    </button>
+                  </div>
+
+                  {/* PRECIO */}
+                  <span className='font-black text-indigo-600 text-xl min-w-[80px] text-right'>
+                    {(e.price * e.cantidad).toFixed(2)}€
+                  </span>
+
+                  {/* ELIMINAR */}
                   <button
                     onClick={() => restador(e.id)}
-                    className='text-red-500 hover:text-red-700 font-bold text-sm'>
-                    Eliminar
+                    className='text-red-400 hover:text-red-600 transition-colors p-2 cursor-pointer'
+                    title='Eliminar producto'>
+                    🗑️
                   </button>
                 </div>
               </div>
@@ -61,7 +92,7 @@ export const CarritoPage = () => {
                 finalizarCompra();
                 toast.success('¡Compra realizada con éxito!');
               }}
-              className='bg-gray-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-indigo-600 transition-all'>
+              className='bg-gray-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-indigo-600 transition-all cursor-pointer shadow-lg'>
               FINALIZAR COMPRA
             </button>
           </div>

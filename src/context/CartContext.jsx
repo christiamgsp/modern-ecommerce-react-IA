@@ -5,6 +5,19 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
 
+  const RestadorUno = (id) => {
+    setCarrito((prev) => {
+      const itemExistente = prev.find((p) => p.id === id);
+      if (itemExistente.cantidad > 1) {
+        return prev.map((p) =>
+          p.id === id ? { ...p, cantidad: p.cantidad - 1 } : p
+        );
+      } else {
+        return prev.filter((p) => p.id !== id);
+      }
+    });
+  };
+
   const Sumador = (item) => {
     setCarrito((prev) => {
       const existe = prev.find((prod) => prod.id === item.id);
@@ -32,7 +45,14 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ carrito, Sumador, restador, finalizarCompra, total }}>
+      value={{
+        carrito,
+        Sumador,
+        restador,
+        finalizarCompra,
+        total,
+        RestadorUno,
+      }}>
       {children}
     </CartContext.Provider>
   );
