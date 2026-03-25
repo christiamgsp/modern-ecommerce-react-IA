@@ -4,8 +4,6 @@ import { useLocalStorage } from '../hooks/useLocalStorage'; // Importa tu hook
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  // 🌟 AQUÍ ESTÁ EL CAMBIO MÁGICO:
-  // En lugar de useState([]), usamos tu hook:
   const [carrito, setCarrito] = useLocalStorage('carrito_smartshop', []);
 
   const Sumador = (producto) => {

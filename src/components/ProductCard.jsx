@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { Link } from 'react-router-dom'; // Corregido: react-router-dom
+import { Link } from 'react-router-dom';
 
 export const ProductCard = ({ product, onAgregar }) => {
   const precioFormateado = product.price.toLocaleString('es-ES', {

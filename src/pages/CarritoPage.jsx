@@ -4,7 +4,6 @@ import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 
 export const CarritoPage = () => {
-  // Asegúrate de traer Sumador del contexto
   const { carrito, total, finalizarCompra, restador, RestadorUno, Sumador } =
     useContext(CartContext);
 
@@ -33,16 +32,13 @@ export const CarritoPage = () => {
               <div
                 key={e.id}
                 className='flex justify-between items-center border-b pb-4 last:border-0'>
-                {/* PARTE IZQUIERDA: Nombre */}
                 <div className='flex flex-col'>
                   <span className='font-bold text-lg text-gray-800'>
                     {e.name}
                   </span>
                 </div>
 
-                {/* PARTE DERECHA: Botones, Precio y Eliminar */}
                 <div className='flex items-center gap-6'>
-                  {/* BOTONERA: Justo a la izquierda del precio */}
                   <div className='flex items-center bg-gray-100 rounded-xl p-1 shadow-inner border border-gray-200'>
                     <button
                       className='w-8 h-8 flex items-center justify-center bg-white rounded-lg shadow-sm hover:bg-red-50 hover:text-red-600 transition-all active:scale-90 font-bold cursor-pointer'
@@ -61,12 +57,10 @@ export const CarritoPage = () => {
                     </button>
                   </div>
 
-                  {/* PRECIO */}
                   <span className='font-black text-indigo-600 text-xl min-w-[80px] text-right'>
                     {(e.price * e.cantidad).toFixed(2)}€
                   </span>
 
-                  {/* ELIMINAR */}
                   <button
                     onClick={() => restador(e.id)}
                     className='text-red-400 hover:text-red-600 transition-colors p-2 cursor-pointer'

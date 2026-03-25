@@ -19,7 +19,6 @@ const formaterProducto = (apiItem) => ({
 });
 
 function App() {
-  console.log('Versión Final v2');
   const [busqueda, setBusqueda] = useState('');
   const [productosApi, setProductosApi] = useState([]);
   const { Sumador } = useContext(CartContext);
