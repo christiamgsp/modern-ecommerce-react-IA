@@ -1,16 +1,36 @@
-# React + Vite
+# ✨ SmartShop - E-commerce con IA 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+¡Bienvenido a **SmartShop**! Una aplicación de comercio electrónico moderna construida con **React**, **Tailwind CSS** y potenciada por **Inteligencia Artificial (Groq/Llama 3)**.
 
-Currently, two official plugins are available:
+## 🌟 Características principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 🤖 **Asistente de IA:** Sugerencias personalizadas sobre productos usando modelos de lenguaje avanzados.
+- 📱 **Diseño 100% Responsive:** Experiencia fluida tanto en escritorio como en dispositivos móviles.
+- 🛒 **Gestión de Carrito:** Sistema completo de añadir/eliminar productos con persistencia.
+- 🚦 **Enrutamiento Dinámico:** Navegación profesional con `react-router-dom` y manejo de errores 404.
+- ⚡ **Velocidad Extrema:** Desarrollado con Vite para una carga instantánea.
 
-## React Compiler
+## 🛠️ Tecnologías utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** React.js, Tailwind CSS.
+- **Estado Global:** React Context API.
+- **IA:** Groq SDK (Llama 3.3).
+- **Iconos:** Lucide React / HeroIcons.
+- **Rutas:** React Router v6.
 
-## Expanding the ESLint configuration
+## 🚀 Instalación y uso
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clona el repositorio:
+
+   ```bash
+   git clone [https://github.com/TU_USUARIO/TU_REPO.git](https://github.com/TU_USUARIO/TU_REPO.git)
+
+   ```
+
+2. Instala las dependencias: npm install
+
+3.Crea un archivo .env y añade tu clave:VITE_GROQ_API_KEY=tu_clave_aqui
+
+4.Lanza el proyecto:npm run dev
+
+Hecho con ❤️ por Christiam Silva
