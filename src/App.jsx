@@ -45,7 +45,7 @@ function App() {
   });
 
   return (
-    <div className='flex flex-col min-h-screen bg-gray-50 text-gray-900'>
+    <div className='flex flex-col min-h-screen bg-gray-50 dark:bg-slate-950 text-gray-900 dark:text-slate-100 transition-colors duration-500'>
       <Toaster richColors position='top-center' />
       <Navbar busqueda={busqueda} onSearch={textSearcher} />
 
@@ -63,13 +63,13 @@ function App() {
                       <ProductCard onAgregar={Sumador} key={e.id} product={e} />
                     ))
                   ) : (
-                    <div className='col-span-full py-20 text-center bg-white rounded-3xl shadow-sm border border-dashed border-gray-200'>
-                      <h3 className='text-xl font-bold text-gray-800'>
+                    <div className='col-span-full py-20 text-center bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-dashed border-gray-200 dark:border-slate-800'>
+                      <h3 className='text-xl font-bold text-gray-800 dark:text-slate-200'>
                         No hemos encontrado "{busqueda}"
                       </h3>
                       <button
                         onClick={() => setBusqueda('')}
-                        className='mt-6 text-indigo-600 font-bold hover:underline cursor-pointer'>
+                        className='mt-6 text-indigo-600 dark:text-indigo-400 font-bold hover:underline cursor-pointer'>
                         Limpiar búsqueda
                       </button>
                     </div>

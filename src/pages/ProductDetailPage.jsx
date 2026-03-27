@@ -22,13 +22,16 @@ export const ProductDetailPage = () => {
       .then((data) => setProducto(data))
       .catch((error) => {
         console.error(error);
-
         navigate('/ruta-que-no-existe');
       });
   }, [id, navigate]);
 
   if (!producto)
-    return <p className='p-20 text-center font-bold'>Cargando producto...</p>;
+    return (
+      <p className='p-20 text-center font-bold text-gray-800 dark:text-slate-200'>
+        Cargando producto...
+      </p>
+    );
 
   const manejarSuma = () => {
     const item = {
@@ -41,10 +44,10 @@ export const ProductDetailPage = () => {
   };
 
   return (
-    <div className='p-10 max-w-6xl mx-auto'>
+    <div className='p-10 max-w-6xl mx-auto transition-colors duration-500'>
       <Link
         to='/'
-        className='inline-flex items-center gap-2 text-indigo-600 font-bold hover:text-indigo-800 transition-colors mb-8 group'>
+        className='inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors mb-8 group'>
         <span className='group-hover:-translate-x-1 transition-transform'>
           ←
         </span>
@@ -53,33 +56,36 @@ export const ProductDetailPage = () => {
 
       <div className='flex flex-col lg:flex-row gap-12 items-start'>
         {/* Columna Izquierda: Imagen */}
-        <div className='flex-1 w-full bg-white p-8 rounded-3xl shadow-sm border border-gray-100'>
+        <div className='flex-1 w-full bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 flex justify-center'>
           <img
             src={producto.thumbnail}
             alt={producto.title}
-            className='w-80 h-auto object-contain rounded-2xl'
+            className='w-80 h-auto object-contain rounded-2xl group-hover:scale-105 transition-transform duration-500'
           />
         </div>
 
+        {/* Columna Derecha: Info */}
         <div className='flex-1'>
-          <span className='text-indigo-600 font-black uppercase tracking-widest text-sm'>
+          <span className='text-indigo-600 dark:text-indigo-400 font-black uppercase tracking-widest text-sm'>
             {producto.category}
           </span>
-          <h1 className='text-5xl font-black text-gray-900 mt-2 leading-tight'>
+          <h1 className='text-5xl font-black text-gray-900 dark:text-white mt-2 leading-tight'>
             {producto.title}
           </h1>
-          <p className='text-gray-500 mt-6 text-xl leading-relaxed'>
+          <p className='text-gray-500 dark:text-slate-400 mt-6 text-xl leading-relaxed'>
             {producto.description}
           </p>
+
           <IAAssistant producto={producto} />
+
           <div className='mt-10 flex items-center gap-8'>
-            <span className='text-4xl font-black text-gray-900'>
+            <span className='text-4xl font-black text-gray-900 dark:text-white'>
               {producto.price}€
             </span>
 
             <button
               onClick={manejarSuma}
-              className='bg-indigo-600 text-white px-10 py-5 rounded-2xl font-bold hover:bg-black transition-all cursor-pointer shadow-xl active:scale-95'>
+              className='bg-indigo-600 dark:bg-indigo-500 text-white px-10 py-5 rounded-2xl font-bold hover:bg-black dark:hover:bg-indigo-400 transition-all cursor-pointer shadow-xl active:scale-95'>
               Añadir al carrito
             </button>
           </div>
