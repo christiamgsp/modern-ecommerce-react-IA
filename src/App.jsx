@@ -50,12 +50,12 @@ function App() {
       <Navbar busqueda={busqueda} onSearch={textSearcher} />
 
       <main className='flex flex-1 w-full relative'>
-        <div className='flex-1 p-6'>
+        <div className='flex-1 p-4 md:p-6'>
           <Routes>
             <Route
               path='/'
               element={
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6'>
                   {productosApi.length === 0 ? (
                     [...Array(8)].map((_, i) => <SkeletonCard key={i} />)
                   ) : searchedList.length > 0 ? (
@@ -63,8 +63,8 @@ function App() {
                       <ProductCard onAgregar={Sumador} key={e.id} product={e} />
                     ))
                   ) : (
-                    <div className='col-span-full py-20 text-center bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-dashed border-gray-200 dark:border-slate-800'>
-                      <h3 className='text-xl font-bold text-gray-800 dark:text-slate-200'>
+                    <div className='col-span-full py-16 md:py-20 text-center bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-dashed border-gray-200 dark:border-slate-800'>
+                      <h3 className='text-lg md:text-xl font-bold text-gray-800 dark:text-slate-200'>
                         No hemos encontrado "{busqueda}"
                       </h3>
                       <button
